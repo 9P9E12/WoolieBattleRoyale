@@ -21,11 +21,15 @@ class SportsComplex {
     public synchronized void enterArena(WoolieBattleThread t){
         while (currUsedArenas == maxArenas){
             try {
+                System.out.println("WOOLIES: " + t.getFighter1().getName() + " and " + t.getFighter2().getName() +
+                        " enterArena line to battle.");
                 t.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("WOOLIES: " + t.getFighter1().getName() + " and " + t.getFighter2().getName()
+                + " enterArena arena to battle.");
         currUsedArenas++;
     }
 

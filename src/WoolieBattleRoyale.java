@@ -41,6 +41,6 @@ public class WoolieBattleRoyale {
             e.printStackTrace();
         }
         Troll troll = new Troll(woolies, sc);
-        troll.beginBattleRoyale();
+        troll.beginBattleRoyale(null);
     }
 }
