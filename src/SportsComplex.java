@@ -15,7 +15,9 @@ class SportsComplex {
 			currUsedArenas = 0;
 	}
 
-	// TODO: implement enterArena here
+    /**
+     *
+     */
     public synchronized void enterArena(){
         while (currUsedArenas == maxArenas){
             try {
@@ -27,7 +29,9 @@ class SportsComplex {
         currUsedArenas++;
     }
 
-	// TODO: implement leaveArena here
+    /**
+     *
+     */
     public synchronized void leaveArena(){
         currUsedArenas--;
         notifyAll();
