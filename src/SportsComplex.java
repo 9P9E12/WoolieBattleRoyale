@@ -18,10 +18,10 @@ class SportsComplex {
     /**
      *
      */
-    public synchronized void enterArena(){
+    public synchronized void enterArena(WoolieBattleThread t){
         while (currUsedArenas == maxArenas){
             try {
-                wait();
+                t.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
