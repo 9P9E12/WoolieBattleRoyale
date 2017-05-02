@@ -7,7 +7,7 @@ import java.util.Random;
 public class Woolie {
 
     //Used to seed the Random Woolie attack value. I'm assuming this is for debugging purposes
-    public static int seed = 1901;
+    private static int seed = 1901;
     //Name of this Woolie
     private String name;
     //Minimum attack value for this Woolie
