@@ -19,6 +19,8 @@ class WoolieBattleThread extends Thread {
     /** Buy Winrar you freeloader. This just stores whatever wookie won the current battle */
     private Woolie winrar;
 
+
+
     /**
      * Accessor for Fighter 1
      * @return The Woolie that is fighter 1
@@ -57,8 +59,9 @@ class WoolieBattleThread extends Thread {
 	/**
      * Not needed for now, but do later
 	 */
-	public void run() {
+	public synchronized void run() {
 		sc.enterArena(this);
+        System.out.println("The battle has begun between " + fighter1.getName() + " and " + fighter2.getName());
         int time = 0;
         while(fighter1.isOK() && fighter2.isOK()){
             try {
@@ -66,16 +69,16 @@ class WoolieBattleThread extends Thread {
                     int dmg = fighter1.getAttackAmount();
                     fighter2.takeDamage(dmg);
                     System.out.println(fighter1.getName() + " does " + dmg + " damage to " + fighter2.getName() + ".");
-                    System.out.println(fighter2.getName() + " has " + fighter2.getCurrentHP() + " health left.");
+                    System.out.println(fighter2.getName() + " has " + fighter2.getCurrentHP() + " health left.\n");
                 }
                 if (time % fighter2.getHitTime() == 0 && fighter2.isOK()){
                     int dmg = fighter1.getAttackAmount();
                     fighter1.takeDamage(dmg);
                     System.out.println(fighter2.getName() + " does " + dmg + " damage to " + fighter1.getName() + ".");
-                    System.out.println(fighter1.getName() + " has " + fighter1.getCurrentHP() + " health left.");
+                    System.out.println(fighter1.getName() + " has " + fighter1.getCurrentHP() + " health left.\n");
                 }
-                time += 1;
-                /*System.out.println("DEBUG: Current Time Value - " + time);
+                time += 1;/*
+                System.out.println("DEBUG: Current Time Value - " + time);
                 System.out.println("DEBUG: Current Health Values | " + fighter1.getCurrentHP()
                         + " - " + fighter2.getCurrentHP() + " |");
                 System.out.println("DEBUG: Current Attack Delays | " + fighter1.getHitTime()
@@ -93,7 +96,7 @@ class WoolieBattleThread extends Thread {
         }
         System.out.println(winrar.getName() + " is the winner!\n");
         winrar.reset();
-        sc.leaveArena();
+        sc.leaveArena(this);
     }
 
     public Woolie getWinner(){

@@ -19,11 +19,11 @@ class SportsComplex {
      *
      */
     public synchronized void enterArena(WoolieBattleThread t){
+        System.out.println("WOOLIES: " + t.getFighter1().getName() + " and " + t.getFighter2().getName() +
+                " enterArena line to battle.");
         while (currUsedArenas == maxArenas){
             try {
-                System.out.println("WOOLIES: " + t.getFighter1().getName() + " and " + t.getFighter2().getName() +
-                        " enterArena line to battle.");
-                t.wait();
+                this.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -36,8 +36,9 @@ class SportsComplex {
     /**
      *
      */
-    public synchronized void leaveArena(){
+    public synchronized void leaveArena(WoolieBattleThread t){
+        System.out.println("WOOLIE: " + t.getWinner().getName() + " leaves the arena victorious!");
         currUsedArenas--;
-        notifyAll();
+        this.notifyAll();
     }
 }
