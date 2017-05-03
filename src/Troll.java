@@ -31,6 +31,7 @@ public class Troll {
             Random pickTwo = new Random();
             //pickTwo.setSeed(seed);
             ArrayList<WoolieBattleThread> threads = new ArrayList<>();
+            ArrayList<Woolie> winners = new ArrayList<>();
             if(woolies.size() % 2 == 0){
                 while (!woolies.isEmpty()){
                     Woolie Woolie1 = woolies.get(pickTwo.nextInt(woolies.size()));
@@ -40,13 +41,16 @@ public class Troll {
                     threads.add(new WoolieBattleThread(Woolie1, Woolie2, complex));
                 }
             } else {
-                for (int i = 0; i < woolies.size() ; i++) {
+                for (int i = 0; i < woolies.size()-1 ; i++) {
                     Woolie Woolie1 = woolies.get(pickTwo.nextInt(woolies.size()));
+                    woolies.remove(Woolie1);
                     Woolie Woolie2 = woolies.get(pickTwo.nextInt(woolies.size()));
+                    woolies.remove(Woolie2);
                     threads.add(new WoolieBattleThread(Woolie1, Woolie2, complex));
                 }
+                Woolie oddman = woolies.get(woolies.size()-1);
+                winners.add(oddman);
             }
-            ArrayList<Woolie> winners = new ArrayList<>();
             for (WoolieBattleThread thread: threads) {
                 thread.start();
                 try {
