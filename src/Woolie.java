@@ -109,7 +109,7 @@ public class Woolie {
     public int getAttackAmount(){
         Random atkVal = new Random();
         //atkVal.setSeed(seed);
-        return atkVal.nextInt((maxAtk - minAtk) + 1 ) + minAtk;
+        return atkVal.nextInt((maxAtk - minAtk) ) + minAtk;
     }
 
     /**

@@ -71,7 +71,7 @@ class WoolieBattleThread extends Thread {
                     System.out.println(fighter2.getName() + " has " + fighter2.getCurrentHP() + " health left.\n");
                 }
                 if (time % fighter2.getHitTime() == 0 && fighter2.isOK()){
-                    int dmg = fighter1.getAttackAmount();
+                    int dmg = fighter2.getAttackAmount();
                     fighter1.takeDamage(dmg);
                     System.out.println(fighter2.getName() + " does " + dmg + " damage to " + fighter1.getName() + ".");
                     System.out.println(fighter1.getName() + " has " + fighter1.getCurrentHP() + " health left.\n");
