@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
+ * Represents a class for simulating the Woolie Battle Royale
  * @author Justin Goodchild
  */
 public class WoolieBattleRoyale {
@@ -40,7 +41,9 @@ public class WoolieBattleRoyale {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        //Create a troll
         Troll troll = new Troll(woolies, sc);
+        //Launch
         troll.beginBattleRoyale(null);
     }
 }

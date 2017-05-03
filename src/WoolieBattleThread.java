@@ -1,11 +1,8 @@
-import java.util.ArrayList;
-
 /**
- * Not needed for now, but do later
+ * Represents a thread to simulate a battle between two Woolies
+ * @author Justin Goodchild
  */
 class WoolieBattleThread extends Thread {
-	/** this is only used for testing */
-	private int id;
 
     /** a reference to the sports complex for conducting who battles when */
 	private SportsComplex sc;
@@ -37,38 +34,40 @@ class WoolieBattleThread extends Thread {
         return fighter2;
     }
 
-	/**
-	 * This method is only used for testing.
-	 */
-	public WoolieBattleThread(int id, SportsComplex sc) {
-		this.id = id;
-		this.sc = sc;
-	}
-
+    /**
+     * Actual constructor for the woolie battle thread
+     * @param fighter1 The first woolie
+     * @param fighter2 The second woolie
+     * @param sc The sports complex used
+     */
     public WoolieBattleThread(Woolie fighter1, Woolie fighter2, SportsComplex sc) {
 	    this.fighter1 = fighter1;
 	    this.fighter2 = fighter2;
 	    this.sc = sc;
     }
 
-	@Override
-	public String toString() {
-		return "Battle-" + this.id;
-	}
-
-	/**
-     * Not needed for now, but do later
-	 */
+    /**
+     * Starts the battle between two woolies
+     */
 	public synchronized void run() {
+	    //Attempt to enter the arena
 		sc.enterArena(this);
+		//Say that the battle's begun
         System.out.println("The battle has begun between " + fighter1.getName() + " and " + fighter2.getName());
+        //Initialize counter
         int time = 0;
+        //Only stop looping once one of the fighters is dead
         while(fighter1.isOK() && fighter2.isOK()){
             try {
+                //A fighter can only attack if the current time is a multiple of his hit delay and he is still alive
                 if (time % fighter1.getHitTime() == 0 && fighter1.isOK()){
+                    //Declare damage as a variable so it can be stated in the system.out statements
                     int dmg = fighter1.getAttackAmount();
+                    //Have the opposite fighter take damage
                     fighter2.takeDamage(dmg);
+                    //State that 1 damaged 2
                     System.out.println(fighter1.getName() + " does " + dmg + " damage to " + fighter2.getName() + ".");
+                    //State 2's remaining health
                     System.out.println(fighter2.getName() + " has " + fighter2.getCurrentHP() + " health left.\n");
                 }
                 if (time % fighter2.getHitTime() == 0 && fighter2.isOK()){
@@ -77,58 +76,35 @@ class WoolieBattleThread extends Thread {
                     System.out.println(fighter2.getName() + " does " + dmg + " damage to " + fighter1.getName() + ".");
                     System.out.println(fighter1.getName() + " has " + fighter1.getCurrentHP() + " health left.\n");
                 }
-                time += 1;/*
-                System.out.println("DEBUG: Current Time Value - " + time);
-                System.out.println("DEBUG: Current Health Values | " + fighter1.getCurrentHP()
-                        + " - " + fighter2.getCurrentHP() + " |");
-                System.out.println("DEBUG: Current Attack Delays | " + fighter1.getHitTime()
-                        + " - " + fighter2.getHitTime() + " |");*/
+                //increment counter
+                time += 1;
+                //sleep to pass time
                 sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        //Battle is finished, system.out that
         System.out.println("The battle is over!");
+        //Decide who the winner was
         if (fighter1.isOK()){
             winrar = fighter1;
         } else {
             winrar = fighter2;
         }
+        //Declare winner
         System.out.println(winrar.getName() + " is the winner!\n");
+        //Reset winner's HP
         winrar.reset();
+        //Leave
         sc.leaveArena(this);
     }
 
+    /**
+     * Accessor for the winner of the battle
+     * @return The thread's winner
+     */
     public Woolie getWinner(){
 	    return winrar;
-    }
-
-	/**
-     * Not needed for now, but do later
-	 */
-	public static void main(String[] args) {
-        System.out.println("main begins!");
-
-        // create the sports complex containing 2 arenas
-        SportsComplex sc = new SportsComplex(2);
-
-        ArrayList<WoolieBattleThread> threads = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-            WoolieBattleThread tempThread = new WoolieBattleThread(i, sc);
-            threads.add(tempThread);
-            tempThread.start();
-        }
-
-        for (int i=0; i<10; i++) {
-            WoolieBattleThread tempThread = threads.get(i);
-            try {
-                tempThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println("main ends!");
     }
 }

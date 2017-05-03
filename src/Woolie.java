@@ -93,6 +93,7 @@ public class Woolie {
      * @param params the parameters for this woolie
      */
     public Woolie(String[] params){
+        //Constructor constructs things from a file input
         name = params[0];
         minAtk = Integer.parseInt(params[1]);
         maxAtk = Integer.parseInt(params[2]);
